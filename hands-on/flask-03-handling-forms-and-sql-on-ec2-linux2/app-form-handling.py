@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, 
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -9,15 +10,15 @@ def home():
 def greet():
     if 'user' in request.args:
         usr=request.args['user']
-        return render_template('greet.html', user=name)
+        return render_template('greet.html', user=usr)
     else:
-        return render_template('greet.html', user= 'Send your username with "user" in param ')
+        return render_template('greet.html', user='Send your username with "user" param in query string')
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        user_name=request.form[ 'username']
+        user_name=request.form['username']
         return render_template('secure.html', user=user_name)
     else:
         return render_template('login.html')
@@ -29,5 +30,7 @@ def login():
 
 
 
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    #app.run(debug=True)
+    app.run('0.0.0.0', port=True)
